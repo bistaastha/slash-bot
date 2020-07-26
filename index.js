@@ -1,8 +1,8 @@
 const commands = require('probot-commands');
-const pendingBadgeURL = "https://bit.ly/pending-badge";
+/*const pendingBadgeURL = "https://bit.ly/pending-badge";
 const passingBadgeURL = "https://bit.ly/passing-badge";
 const silverBadgeURL = "https://bit.ly/silver-badge";
-const goldBadgeURL = "https://bit.ly/gold-badge";
+const goldBadgeURL = "https://bit.ly/gold-badge";*/
 
 module.exports = (app) => {
 
@@ -10,25 +10,31 @@ module.exports = (app) => {
     const statusArray = command.arguments.split(/, */);
     const status = statusArray[0];
     const pullRequestURL = context.payload.issue.html_url;
-
+    const config = await context.config('config.yml');
     //Badge is pending unless otherwise specified
     let finalBadgeURL = pendingBadgeURL;
 
+
     if (status == "passing")
     {
-      finalBadgeURL = passingBadgeURL;
+      if(config.pendingBadgeURL)
+        finalBadgeURL = passingBadgeURL;
     }
     if (status == "silver")
     {
-      finalBadgeURL = silverBadgeURL;
+      if(config.silverBadgeURL)
+        finalBadgeURL = silverBadgeURL;
     }
     if (status == "gold")
     {
-      finalBadgeURL = goldBadgeURL;
+      if(config.goldBadgeURL)
+        finalBadgeURL = goldBadgeURL;
     }
+
+    finalBadgeURL += "&link=" + pullRequestURL;
     const instructions =
     `Paste the Markdown link below where you want the badge displayed.`;
-    const finalBadge = "[![badge-level](" + finalBadgeURL + ")]("+ pullRequestURL + ")";
+    const finalBadge = "![badge-level](" + finalBadgeURL + ")";
     
     const badgeMessage = finalBadge + "\n" + instructions + "\n```\n" + "Markdown: " + finalBadge + "\n```" ;
     return context.github.issues.createComment(
