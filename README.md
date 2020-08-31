@@ -1,23 +1,5 @@
-# slash-bot
+# assign-bot
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that A Probot app
+A GitHub App for assigning badges using slash commands. This was developed for potential use in the CHAOSS D&I badging project.
 
-## Setup
-
-```sh
-# Install dependencies
-npm install
-
-# Run the bot
-npm start
-```
-
-## Contributing
-
-If you have suggestions for how slash-bot could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
-
-For more, check out the [Contributing Guide](CONTRIBUTING.md).
-
-## License
-
-[ISC](LICENSE) © 2020 Aastha Bist <abist119@gmail.com>
+This has not been integrated into the [badging-bot](github.com/bistaastha/badging-bot)
